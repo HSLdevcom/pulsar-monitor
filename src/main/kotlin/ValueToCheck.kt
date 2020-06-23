@@ -1,0 +1,1 @@
+data class ValueToCheck(val path : String, val min : Double?, val max : Double?)

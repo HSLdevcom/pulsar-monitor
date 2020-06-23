@@ -1,0 +1,1 @@
+data class EndpointToCheck(val endpoint: String, val valuesToCheck: List<ValueToCheck>)

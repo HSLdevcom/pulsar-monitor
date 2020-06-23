@@ -1,0 +1,14 @@
+{
+  "host": "http://localhost:8080",
+  "slackbridge": "https://transitlog-monitoring-1578649020842.azurewebsites.net/api/v1/postToSlack/alerter/pulsar-monitoring",
+  "errormessage": "Alert from pulsar %s:",
+  "endpoints" : [
+    {"endpoint": "admin/v2/persistent/%s-transitdata/gtfs-rt/feedmessage-vehicleposition/stats",
+    "valuesToCheck" : [
+      {"path" : "msgRateIn", "min":  0, "max" :  99999},
+      {"path" : "msgRateOut", "min":  0, "max" :  99999}
+    ]
+    }
+  ]
+}
+
