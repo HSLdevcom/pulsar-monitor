@@ -30,14 +30,13 @@ object MonitorService{
     }
 
     private fun sendErrorMessageToSlack(e : Exception, monitorConf : MonitorConf){
-        val environment : String = System.getenv("environment")
 
-        val url = URL(String.format(monitorConf.slackbridge, environment))
+        val url = URL(monitorConf.slackbridge)
         val headers : Map<String, String> = mapOf(
             Pair("Content-type","application/json")
         )
 
-        NetworkHelper.getResponse(url, headers, String.format(monitorConf.errormessage, environment) + " " +  e.message)
+        NetworkHelper.getResponse(url, headers, monitorConf.errormessage + " " +  e.message)
         throw e
     }
 

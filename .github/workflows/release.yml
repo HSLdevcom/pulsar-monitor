@@ -19,5 +19,5 @@ jobs:
       - name: Upload to release
         uses: AButler/upload-release-assets@v2.0
         with:
-          files: 'build/libs/*.jar;monitor.json;checkValues.sh'
+          files: 'build/libs/*.jar'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
