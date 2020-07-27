@@ -9,14 +9,15 @@ import kotlinx.coroutines.withContext
 import org.omg.CORBA.Environment
 import java.io.File
 import java.net.URL
+import kotlin.properties.Delegates
 
 
 object MonitorService{
 
-    val f = JsonFactory()
-    val mapper = ObjectMapper(f).registerModule(KotlinModule())
+    private val f = JsonFactory()
+    private val mapper: ObjectMapper = ObjectMapper(f).registerModule(KotlinModule())
 
-    fun start(args: Array<String>)= runBlocking {
+    fun start()= runBlocking {
         var monitorConf : MonitorConf? = null
         try{
             monitorConf = mapper.readValue(File("monitor.json"))
@@ -52,8 +53,14 @@ object MonitorService{
     }
 
     private fun checkIfValueIsWithinRange(data : JsonNode, valueToCheck : ValueToCheck, url : URL){
-        val value : Double = data.findValue(valueToCheck.path).asDouble()
-        if( valueToCheck.min != null && value <= valueToCheck.min || valueToCheck.max != null && value >= valueToCheck.max){
+        var value by Delegates.notNull<Double>()
+        try{
+            value = data.findValue(valueToCheck.path).asDouble()
+        }
+        catch(e : Exception){
+            throw Exception("Unable to read value from $url path ${valueToCheck.path}", e)
+        }
+        if( valueToCheck.min != null && value < valueToCheck.min || valueToCheck.max != null && value > valueToCheck.max){
             throw ValueNotInRangeException(valueToCheck, value, url)
         }
     }
