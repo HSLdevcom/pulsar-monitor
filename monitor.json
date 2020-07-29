@@ -1,14 +1,21 @@
 {
-  "host": "http://localhost:8089",
+  "host": "http://localhost:8080",
   "slackbridge": "https://transitlog-monitoring-1578649020842.azurewebsites.net/api/v1/postToSlack/alerter/pulsar-monitoring",
-  "errormessage": "Alert from pulsar local dev, please ignore:",
+  "errormessage": "Alert from pulsar dev:",
   "endpoints" : [
-    {"endpoint": "admin/v2/persistent/dev-transitdata/gtfs-rt/feedmessage-vehicleposition/stats",
-    "valuesToCheck" : [
-      {"path" : "msgRateIn", "min":  0.1, "max" :  99999},
-      {"path" : "msgRateOut", "min":  0.1, "max" :  99999},
-      {"path" : "storageSize", "min":  0, "max" :  20000000}
-    ]
+    {"endpoint": "admin/v2/persistent/dev-transitdata/hfp-mqtt-raw/v2/stats",
+      "valuesToCheck" : [
+        {"path" : "msgRateIn", "min":  0.1, "max" :  99999},
+        {"path" : "msgRateOut", "min":  0.1, "max" :  99999},
+        {"path" : "storageSize", "min":  0, "max" :  1000000000}
+      ]
+    },
+    {"endpoint": "admin/v2/persistent/dev-transitdata/hfp-mqtt-raw-deduplicated/v2/stats",
+      "valuesToCheck" : [
+        {"path" : "msgRateIn", "min":  0.1, "max" :  99999},
+        {"path" : "msgRateOut", "min":  0.1, "max" :  99999},
+        {"path" : "storageSize", "min":  0, "max" :  50000000}
+      ]
     },
     {"endpoint": "admin/v2/persistent/dev-transitdata/hfp/v2/stats",
       "valuesToCheck" : [
@@ -17,49 +24,28 @@
         {"path" : "storageSize", "min":  0, "max" :  90000000000}
       ]
     },
-    {"endpoint": "admin/v2/persistent/dev-transitdata/hfp-mqtt-raw-deduplicated/v2/stats",
+    {"endpoint": "admin/v2/persistent/dev-transitdata/gtfs-rt/feedmessage-vehicleposition/stats",
       "valuesToCheck" : [
         {"path" : "msgRateIn", "min":  0.1, "max" :  99999},
         {"path" : "msgRateOut", "min":  0.1, "max" :  99999},
-        {"path" : "storageSize", "min":  0, "max" :  20000000}
+        {"path" : "storageSize", "min":  0, "max" :  200000000}
       ]
     },
-    {"endpoint": "admin/v2/persistent/dev-transitdata/hfp-mqtt-raw/v2/stats",
+    {"endpoint": "admin/v2/persistent/dev-transitdata/metro-ats-mqtt-raw/metro-estimate/stats",
       "valuesToCheck" : [
         {"path" : "msgRateIn", "min":  0.1, "max" :  99999},
         {"path" : "msgRateOut", "min":  0.1, "max" :  99999},
-        {"path" : "storageSize", "min":  0, "max" :  20000000}
-      ]
-    },
-    {"endpoint": "admin/v2/persistent/dev-transitdata/gtfs-rt/feedmessage-tripupdate/stats",
-      "valuesToCheck" : [
-        {"path" : "msgRateIn", "min":  0.1, "max" :  99999},
-        {"path" : "msgRateOut", "min":  0.1, "max" :  99999},
-        {"path" : "storageSize", "min":  0, "max" :  20000000}
-      ]
-    },
-    {"endpoint": "admin/v2/persistent/dev-transitdata/internal-messages/pubtrans-stop-estimate/stats",
-      "valuesToCheck" : [
-        {"path" : "msgRateIn", "min":  0.1, "max" :  99999},
-        {"path" : "msgRateOut", "min":  0.1, "max" :  99999},
-        {"path" : "storageSize", "min":  0, "max" :  20000000}
-      ]
-    },
-    {"endpoint": "admin/v2/persistent/dev-transitdata/source-metro-ats/metro-estimate/stats",
-      "valuesToCheck" : [
-        {"path" : "msgRateIn", "min":  0.1, "max" :  99999},
-        {"path" : "msgRateOut", "min":  0.1, "max" :  99999},
-        {"path" : "storageSize", "min":  0, "max" :  20000000}
+        {"path" : "storageSize", "min":  0, "max" :  1000000000}
       ]
     },
     {"endpoint": "admin/v2/persistent/dev-transitdata/metro-ats-mqtt-raw-deduplicated/metro-estimate/stats",
       "valuesToCheck" : [
         {"path" : "msgRateIn", "min": 0.1, "max" :  99999},
         {"path" : "msgRateOut", "min":  0.1, "max" :  99999},
-        {"path" : "storageSize", "min":  0, "max" :  20000000}
+        {"path" : "storageSize", "min":  0, "max" :  500000000}
       ]
     },
-    {"endpoint": "admin/v2/persistent/dev-transitdata/metro-ats-mqtt-raw/metro-estimate/stats",
+    {"endpoint": "admin/v2/persistent/dev-transitdata/source-metro-ats/metro-estimate/stats",
       "valuesToCheck" : [
         {"path" : "msgRateIn", "min":  0.1, "max" :  99999},
         {"path" : "msgRateOut", "min":  0.1, "max" :  99999},
@@ -80,13 +66,19 @@
         {"path" : "storageSize", "min":  0, "max" :  20000000}
       ]
     },
-    {"endpoint": "admin/v2/persistent/dev-transitdata/gtfs-rt/feedmessage-tripupdate/stats",
+    {"endpoint": "admin/v2/persistent/dev-transitdata/internal-messages/pubtrans-stop-estimate/stats",
       "valuesToCheck" : [
         {"path" : "msgRateIn", "min":  0.1, "max" :  99999},
         {"path" : "msgRateOut", "min":  0.1, "max" :  99999},
         {"path" : "storageSize", "min":  0, "max" :  20000000}
       ]
+    },
+    {"endpoint": "admin/v2/persistent/dev-transitdata/gtfs-rt/feedmessage-tripupdate/stats",
+      "valuesToCheck" : [
+        {"path" : "msgRateIn", "min":  0.1, "max" :  99999},
+        {"path" : "msgRateOut", "min":  0.1, "max" :  99999},
+        {"path" : "storageSize", "min":  0, "max" :  10000000000}
+      ]
     }
   ]
 }
-
