@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.omg.CORBA.Environment
@@ -48,11 +49,11 @@ object MonitorService{
         withContext(Dispatchers.IO) {
             val stream = NetworkHelper.getInputStream(url)
             val rootNode: JsonNode = mapper.readValue(stream!!)
-            valuesToCheck.forEach { item -> checkIfValueIsWithinRange(rootNode, item, url) }
+            valuesToCheck.forEach { item -> checkIfValueIsWithinRange(rootNode, item, url, 60 * 1000) }
         }
     }
 
-    private fun checkIfValueIsWithinRange(data : JsonNode, valueToCheck : ValueToCheck, url : URL){
+    private suspend fun checkIfValueIsWithinRange(data : JsonNode, valueToCheck : ValueToCheck, url : URL, retryDelay : Long){
         var value by Delegates.notNull<Double>()
         try{
             value = data.findValue(valueToCheck.path).asDouble()
@@ -61,7 +62,13 @@ object MonitorService{
             throw Exception("Unable to read value from $url path ${valueToCheck.path}", e)
         }
         if( valueToCheck.min != null && value < valueToCheck.min || valueToCheck.max != null && value > valueToCheck.max){
-            throw ValueNotInRangeException(valueToCheck, value, url)
+            if(retryDelay == 0L){
+                throw ValueNotInRangeException(valueToCheck, value, url)
+            }
+            else{
+                delay(retryDelay)
+                checkIfValueIsWithinRange(data, valueToCheck, url, 0L)
+            }
         }
     }
 }
