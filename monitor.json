@@ -1,7 +1,8 @@
 {
-  "host": "http://localhost:8080",
+  "host": "http://localhost:8089",
   "slackbridge": "https://transitlog-monitoring-1578649020842.azurewebsites.net/api/v1/postToSlack/alerter/pulsar-monitoring",
-  "errormessage": "Alert from pulsar dev:",
+  "errormessage": "New errors: \n %s \nGone errors: \n %s \nRemaining errors: \n %s",
+  "unexpectederrormessage": "Unexpected error from pulsar monitoring:",
   "endpoints" : [
     {"endpoint": "admin/v2/persistent/dev-transitdata/hfp-mqtt-raw/v2/stats",
       "valuesToCheck" : [
