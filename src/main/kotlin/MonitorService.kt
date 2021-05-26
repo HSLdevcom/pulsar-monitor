@@ -95,7 +95,7 @@ object MonitorService{
             val stream = NetworkHelper.getInputStream(url)
             val rootNode: JsonNode = mapper.readValue(stream!!)
             valuesToCheck.forEach { item ->
-                    val valueNotInRange = checkIfValueIsWithinRange(rootNode, item, url, 1000)
+                    val valueNotInRange = checkIfValueIsWithinRange(rootNode, item, url, 60000)
                     if(valueNotInRange != null){
                         exceptionList.add(valueNotInRange)
                     }
